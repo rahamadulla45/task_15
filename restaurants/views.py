@@ -4,6 +4,15 @@ from .forms import RestaurantForm, ItemForm, SignupForm, SigninForm
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
 from django.db.models import Q
+import requests
+
+def movie_list(request):
+    url = 'http://www.omdbapi.com/?apikey=de30de51&s=game'
+    response = requests.get(url)
+    context = {
+    "response" : response.json()
+    }
+    return render(request,'movie_list.html', context)
 
 def restaurant_favorite(request, restaurant_id):
     restaurant_obj = Restaurant.objects.get(id=restaurant_id)
